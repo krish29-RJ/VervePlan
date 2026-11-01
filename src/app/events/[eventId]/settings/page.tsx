@@ -53,20 +53,6 @@ export default function EventSettingsPage() {
   const [description, setDescription] = useState(event.description);
   const [savedNotice, setSavedNotice] = useState(false);
 
-  React.useEffect(() => {
-    setTitle(event.title);
-    setEventType(event.eventType);
-    setEventDate(event.eventDate);
-    setLocation(event.location);
-    setGuestTarget(event.guestTarget);
-    setBudgetMajor(fromMinorUnits(event.totalBudgetMinor));
-    setCurrency(event.currency);
-    setTheme(event.theme);
-    setIndoorOutdoor(event.preferences.indoorOutdoor);
-    setDuration(event.preferences.duration);
-    setDescription(event.description);
-  }, [event]);
-
   function handleSaveSettings(e: React.FormEvent) {
     e.preventDefault();
     updateEventDetails(event.id, {
@@ -118,7 +104,7 @@ export default function EventSettingsPage() {
             )}
           </div>
 
-          <form onSubmit={handleSaveSettings} className="space-y-5 text-xs sm:text-sm">
+          <form key={`${event.id}-${event.version}`} onSubmit={handleSaveSettings} className="space-y-5 text-xs sm:text-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="settings-title-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">

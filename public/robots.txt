@@ -1,8 +1,5 @@
 # VervePlan Robots.txt
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /dashboard/
-Disallow: /events/*/settings/
 
 Sitemap: https://verveplan.app/sitemap.xml

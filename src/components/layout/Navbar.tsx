@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -31,18 +31,42 @@ export function Navbar() {
     enterDemoMode,
     logout,
     resetDemoData,
-    toastMessage,
-    dismissToast,
   } = useUtsav();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const isDark = themeMode === "dark";
+
+  useEffect(() => {
+    try {
+      const pendingToast = sessionStorage.getItem("utsav_reset_toast");
+      if (pendingToast) {
+        setToastMessage(pendingToast);
+        sessionStorage.removeItem("utsav_reset_toast");
+      }
+    } catch {
+      // safe fallback for restricted storage environments
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [toastMessage]);
+
+  const dismissToast = () => setToastMessage(null);
 
   const handleReset = async () => {
     if (isResetting) return;
     setIsResetting(true);
     try {
       resetDemoData();
+      setToastMessage(
+        "✨ Demo workspace restored to factory defaults! All sample celebrations, budgets, and tasks have been reset."
+      );
       const currentPath = pathname || "";
       if (currentPath.startsWith("/events/")) {
         const parts = currentPath.split("/");
