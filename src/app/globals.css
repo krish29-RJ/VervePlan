@@ -1,0 +1,334 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --utsav-bg-rgb: 250 248 255;
+  --utsav-surface-rgb: 255 255 255;
+  --utsav-elevated-rgb: 244 240 255;
+  --utsav-primary-rgb: 116 86 232;
+  --utsav-deep-rgb: 73 52 166;
+  --utsav-text-rgb: 36 29 57;
+  --utsav-muted-rgb: 110 103 130;
+
+  --utsav-bg: #FAF8FF;
+  --utsav-surface: #FFFFFF;
+  --utsav-elevated: #F4F0FF;
+  --utsav-primary: #7456E8;
+  --utsav-deep: #4934A6;
+  --utsav-coral: #FF8075;
+  --utsav-gold: #F4C56A;
+  --utsav-text: #241D39;
+  --utsav-muted: #6E6782;
+  --utsav-border: rgba(116, 86, 232, 0.15);
+  color-scheme: light;
+}
+
+html.dark,
+body.dark,
+[data-theme="dark"] {
+  --utsav-bg-rgb: 15 11 26;
+  --utsav-surface-rgb: 26 20 45;
+  --utsav-elevated-rgb: 37 29 61;
+  --utsav-primary-rgb: 142 116 248;
+  --utsav-deep-rgb: 196 181 253;
+  --utsav-text-rgb: 246 244 255;
+  --utsav-muted-rgb: 176 167 204;
+
+  --utsav-bg: #0F0B1A;
+  --utsav-surface: #1A142D;
+  --utsav-elevated: #251D3D;
+  --utsav-primary: #8E74F8;
+  --utsav-deep: #C4B5FD;
+  --utsav-coral: #FF8B80;
+  --utsav-gold: #F6CE7B;
+  --utsav-text: #F6F4FF;
+  --utsav-muted: #B0A7CC;
+  --utsav-border: rgba(142, 116, 248, 0.28);
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Plus Jakarta Sans", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  background-color: var(--utsav-bg);
+  color: var(--utsav-text);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--utsav-bg);
+  color: var(--utsav-text);
+  font-family: "Plus Jakarta Sans", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Plus Jakarta Sans", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.028em;
+  line-height: 1.16;
+}
+
+/* Full-width Fluid Responsive Container for Desktop, Laptop, Tablet & Android */
+.utsav-container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 3.5vw, 4rem);
+  padding-right: clamp(1rem, 3.5vw, 4rem);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="search"],
+select,
+textarea {
+  font-family: inherit;
+  background-color: var(--utsav-surface);
+  color: var(--utsav-text);
+  border: 1px solid var(--utsav-border);
+  border-radius: 0.875rem;
+  min-height: 42px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #7456E8 !important;
+  box-shadow: 0 0 0 3px rgba(116, 86, 232, 0.22) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(110, 103, 130, 0.58) !important;
+  font-weight: 400 !important;
+  user-select: none;
+  pointer-events: none;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder,
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: rgba(180, 171, 208, 0.50) !important;
+}
+
+.utsav-card {
+  background-color: var(--utsav-surface);
+  border: 1px solid var(--utsav-border);
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px -2px rgba(36, 29, 57, 0.05), 0 12px 28px -6px rgba(116, 86, 232, 0.07);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.utsav-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(116, 86, 232, 0.42);
+  box-shadow: 0 10px 32px -6px rgba(116, 86, 232, 0.18), 0 4px 12px -2px rgba(36, 29, 57, 0.06);
+}
+
+.utsav-glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(116, 86, 232, 0.14);
+}
+
+.utsav-num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.utsav-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background-image: linear-gradient(135deg, #7456E8 0%, #5B3FD1 55%, #4934A6 100%);
+  padding: 0.65rem 1.25rem;
+  min-height: 42px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px -2px rgba(116, 86, 232, 0.25);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.utsav-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -4px rgba(116, 86, 232, 0.38);
+}
+
+.utsav-btn-primary:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.utsav-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--utsav-border);
+  background-color: var(--utsav-surface);
+  padding: 0.65rem 1.25rem;
+  min-height: 42px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--utsav-text);
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(36, 29, 57, 0.05);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.utsav-btn-secondary:hover {
+  border-color: #7456E8 !important;
+  background-color: rgba(116, 86, 232, 0.12) !important;
+}
+
+.utsav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   High-Specificity Dark Mode Overrides (Guaranteed even over cached utilities)
+   ============================================================================ */
+html.dark,
+html.dark body,
+[data-theme="dark"],
+[data-theme="dark"] body {
+  background-color: #0F0B1A !important;
+  color: #F6F4FF !important;
+}
+
+html.dark .utsav-glass,
+[data-theme="dark"] .utsav-glass {
+  background: rgba(18, 13, 33, 0.92) !important;
+  border-color: rgba(142, 116, 248, 0.28) !important;
+}
+
+html.dark .utsav-card,
+[data-theme="dark"] .utsav-card {
+  background-color: #1A142D !important;
+  background-image: none !important;
+  border-color: rgba(142, 116, 248, 0.28) !important;
+  color: #F6F4FF !important;
+  box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.55), 0 2px 10px -2px rgba(116, 86, 232, 0.16) !important;
+}
+
+html.dark .utsav-btn-secondary,
+[data-theme="dark"] .utsav-btn-secondary {
+  background-color: #241B3D !important;
+  color: #F6F4FF !important;
+  border-color: rgba(142, 116, 248, 0.38) !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-utsav-surface,
+html.dark [class*="bg-utsav-surface"],
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-utsav-surface,
+[data-theme="dark"] [class*="bg-utsav-surface"] {
+  background-color: #1A142D !important;
+}
+
+html.dark .bg-utsav-bg,
+html.dark [class*="bg-utsav-bg"],
+[data-theme="dark"] .bg-utsav-bg,
+[data-theme="dark"] [class*="bg-utsav-bg"] {
+  background-color: #0F0B1A !important;
+}
+
+html.dark [class*="from-utsav-surface"],
+[data-theme="dark"] [class*="from-utsav-surface"] {
+  background-image: linear-gradient(180deg, #1A142D 0%, #120D22 100%) !important;
+}
+
+html.dark .text-utsav-text,
+[data-theme="dark"] .text-utsav-text {
+  color: #F6F4FF !important;
+}
+
+html.dark .text-utsav-muted,
+[data-theme="dark"] .text-utsav-muted {
+  color: #B4ABD0 !important;
+}
+
+html.dark .text-utsav-deep,
+[data-theme="dark"] .text-utsav-deep {
+  color: #C4B5FD !important;
+}
+
+html.dark .text-utsav-primary,
+[data-theme="dark"] .text-utsav-primary {
+  color: #A48FFF !important;
+}
+
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark input[type="number"],
+html.dark input[type="date"],
+html.dark input[type="search"],
+html.dark select,
+html.dark textarea,
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="search"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #140F24 !important;
+  color: #F6F4FF !important;
+  border-color: rgba(142, 116, 248, 0.34) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+}
