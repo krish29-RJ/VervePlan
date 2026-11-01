@@ -366,7 +366,17 @@ export default function SmartBudgetPage() {
                         />
                       ))}
                     </Pie>
-                    <RechartsTooltip />
+                    <RechartsTooltip
+                      contentStyle={{
+                        backgroundColor: "#1A142D",
+                        borderColor: "rgba(116, 86, 232, 0.3)",
+                        borderRadius: "12px",
+                        color: "#F6F4FF",
+                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
+                      }}
+                      itemStyle={{ color: "#E2E8F0", fontSize: "12px" }}
+                      labelStyle={{ color: "#8E74F8", fontWeight: 700, marginBottom: "4px" }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               ) : (
@@ -391,7 +401,18 @@ export default function SmartBudgetPage() {
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(116,86,232,0.12)" />
                     <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 11 }} />
-                    <RechartsTooltip />
+                    <RechartsTooltip
+                      cursor={false}
+                      contentStyle={{
+                        backgroundColor: "#1A142D",
+                        borderColor: "rgba(116, 86, 232, 0.3)",
+                        borderRadius: "12px",
+                        color: "#F6F4FF",
+                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
+                      }}
+                      itemStyle={{ color: "#E2E8F0", fontSize: "12px" }}
+                      labelStyle={{ color: "#8E74F8", fontWeight: 700, marginBottom: "4px" }}
+                    />
                     <Legend wrapperStyle={{ fontSize: 12 }} />
                     <Bar dataKey="Planned" fill="#7456E8" radius={[6, 6, 0, 0]} />
                     <Bar dataKey="Confirmed" fill="#10B981" radius={[6, 6, 0, 0]} />

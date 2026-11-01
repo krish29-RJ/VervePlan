@@ -31,9 +31,37 @@ export function Navbar() {
     enterDemoMode,
     logout,
     resetDemoData,
+    toastMessage,
+    dismissToast,
   } = useUtsav();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
   const isDark = themeMode === "dark";
+
+  const handleReset = async () => {
+    if (isResetting) return;
+    setIsResetting(true);
+    try {
+      resetDemoData();
+      const currentPath = pathname || "";
+      if (currentPath.startsWith("/events/")) {
+        const parts = currentPath.split("/");
+        const currentEventId = parts[2];
+        const validDemoIds = ["demo-garden-birthday", "demo-royal-wedding", "demo-college-fest"];
+        if (currentEventId && !validDemoIds.includes(currentEventId)) {
+          router.push("/events/demo-garden-birthday");
+        } else {
+          router.refresh();
+        }
+      } else {
+        router.refresh();
+      }
+    } finally {
+      setTimeout(() => {
+        setIsResetting(false);
+      }, 500);
+    }
+  };
 
   const navLinks = [
     {
@@ -109,18 +137,19 @@ export function Navbar() {
         {/* Right Controls: Demo Pill, Theme Toggle & User Actions */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {isDemoMode && (
-            <div className="hidden xl:flex items-center gap-2 rounded-full bg-utsav-primary/10 border border-utsav-primary/20 px-3 py-1.5 text-xs font-bold text-utsav-primary whitespace-nowrap">
+            <div className="hidden lg:flex items-center gap-2 rounded-full bg-utsav-primary/10 border border-utsav-primary/20 px-3 py-1.5 text-xs font-bold text-utsav-primary whitespace-nowrap">
               <ShieldCheck className="w-3.5 h-3.5 text-utsav-coral shrink-0" />
               <span>Demo Mode Active</span>
               <span className="text-utsav-muted">·</span>
               <button
                 type="button"
-                onClick={() => resetDemoData()}
-                className="inline-flex items-center gap-1 text-utsav-deep hover:underline cursor-pointer"
-                title="Reset sample events to default state"
+                onClick={handleReset}
+                disabled={isResetting}
+                className="inline-flex items-center gap-1.5 text-utsav-deep hover:underline cursor-pointer font-bold focus:outline-none focus:ring-1 focus:ring-utsav-primary rounded px-1 disabled:opacity-60"
+                title="Reset sample events to default factory state"
               >
-                <RotateCcw className="w-3 h-3" />
-                Reset
+                <RotateCcw className={`w-3 h-3 ${isResetting ? "animate-spin" : ""}`} />
+                <span>{isResetting ? "Resetting..." : "Reset"}</span>
               </button>
             </div>
           )}
@@ -225,13 +254,15 @@ export function Navbar() {
               </span>
               <button
                 type="button"
-                onClick={() => {
-                  resetDemoData();
+                onClick={async () => {
+                  await handleReset();
                   setMobileOpen(false);
                 }}
-                className="underline font-extrabold"
+                disabled={isResetting}
+                className="underline font-extrabold inline-flex items-center gap-1.5 disabled:opacity-60 cursor-pointer"
               >
-                Reset Data
+                <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? "animate-spin" : ""}`} />
+                <span>{isResetting ? "Resetting..." : "Reset Data"}</span>
               </button>
             </div>
           )}
@@ -290,6 +321,23 @@ export function Navbar() {
                 Sign In / Register
               </Link>
             )}
+          </div>
+        </div>
+      )}
+      {/* Global Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-20 right-4 sm:right-6 z-50 animate-in fade-in slide-in-from-top-3 duration-200 pointer-events-auto">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-emerald-600 text-white font-extrabold text-xs sm:text-sm shadow-2xl border border-emerald-400/40">
+            <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shrink-0" />
+            <span className="leading-snug">{toastMessage}</span>
+            <button
+              type="button"
+              onClick={dismissToast}
+              className="ml-2 text-white/80 hover:text-white cursor-pointer p-0.5 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Dismiss notification"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
         </div>
       )}

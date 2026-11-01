@@ -53,6 +53,20 @@ export default function EventSettingsPage() {
   const [description, setDescription] = useState(event.description);
   const [savedNotice, setSavedNotice] = useState(false);
 
+  React.useEffect(() => {
+    setTitle(event.title);
+    setEventType(event.eventType);
+    setEventDate(event.eventDate);
+    setLocation(event.location);
+    setGuestTarget(event.guestTarget);
+    setBudgetMajor(fromMinorUnits(event.totalBudgetMinor));
+    setCurrency(event.currency);
+    setTheme(event.theme);
+    setIndoorOutdoor(event.preferences.indoorOutdoor);
+    setDuration(event.preferences.duration);
+    setDescription(event.description);
+  }, [event]);
+
   function handleSaveSettings(e: React.FormEvent) {
     e.preventDefault();
     updateEventDetails(event.id, {

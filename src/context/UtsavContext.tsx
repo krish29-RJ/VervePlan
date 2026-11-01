@@ -66,6 +66,9 @@ interface UtsavContextValue {
   ) => Promise<{ ok: boolean; error?: string }>;
   logout: () => Promise<void>;
   resetDemoData: () => void;
+  toastMessage: string | null;
+  showToast: (message: string) => void;
+  dismissToast: () => void;
   createEventFromGeneratedPlan: (
     input: z.infer<typeof CreateEventInputSchema>,
     generated: GeneratedPlanResponse
@@ -192,6 +195,23 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
   const [themeMode, setThemeModeState] = useState<"light" | "dark">("light");
   const [user, setUser] = useState<AuthUserSession | null>(DEFAULT_DEMO_USER);
   const [bundles, setBundles] = useState<FullEventBundle[]>(initialSeeds);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setToastMessage(msg);
+  }, []);
+
+  const dismissToast = useCallback(() => {
+    setToastMessage(null);
+  }, []);
+
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [toastMessage]);
 
   useEffect(() => {
     try {
@@ -223,6 +243,12 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
         setUser(JSON.parse(rawAuth));
       } else {
         localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(DEFAULT_DEMO_USER));
+      }
+
+      const pendingToast = sessionStorage.getItem("utsav_reset_toast");
+      if (pendingToast) {
+        setToastMessage(pendingToast);
+        sessionStorage.removeItem("utsav_reset_toast");
       }
     } catch (e) {
       console.warn("Failed to read localStorage, using in-memory demo seeds:", e);
@@ -369,9 +395,18 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
   const resetDemoData = useCallback(() => {
     const fresh = createInitialDemoBundles();
     setBundles(fresh);
+    setUser(DEFAULT_DEMO_USER);
     try {
       localStorage.setItem(STORAGE_KEY_BUNDLES, JSON.stringify(fresh));
+      localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(DEFAULT_DEMO_USER));
+      sessionStorage.setItem(
+        "utsav_reset_toast",
+        "✨ Demo workspace restored to factory defaults! All sample celebrations, budgets, and tasks have been reset."
+      );
     } catch {}
+    setToastMessage(
+      "✨ Demo workspace restored to factory defaults! All sample celebrations, budgets, and tasks have been reset."
+    );
   }, []);
 
   const getEventBundle = useCallback(
@@ -1172,6 +1207,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
       signupWithEmail,
       logout,
       resetDemoData,
+      toastMessage,
+      showToast,
+      dismissToast,
       createEventFromGeneratedPlan,
       updateEventDetails,
       deleteEvent,
@@ -1210,6 +1248,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
       signupWithEmail,
       logout,
       resetDemoData,
+      toastMessage,
+      showToast,
+      dismissToast,
       createEventFromGeneratedPlan,
       updateEventDetails,
       deleteEvent,
