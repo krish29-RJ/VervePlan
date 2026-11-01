@@ -160,8 +160,8 @@ export function buildDeterministicEventPlan(
     theme: {
       primaryTheme: {
         name: input.theme,
-        tagline: `Elevated ${input.preferences.atmosphere.toLowerCase()} experience for ${input.location}`,
-        description: `Designed for ${input.preferences.indoorOutdoor.toLowerCase()} settings, pairing layered lighting, reusable botanicals, and cohesive table styling.`,
+        tagline: `Elevated ${(input.preferences.atmosphere || "celebratory").toLowerCase()} experience for ${input.location}`,
+        description: `Designed for ${(input.preferences.indoorOutdoor || "event").toLowerCase()} settings, pairing layered lighting, reusable botanicals, and cohesive table styling.`,
         colors: [
           { name: "Celebration Iris", hex: palette[0] || "#7456E8", role: "Primary Drapes & Accents" },
           { name: "Warm Coral", hex: palette[1] || "#FF8075", role: "Florals & Print Stationary" },
@@ -177,12 +177,12 @@ export function buildDeterministicEventPlan(
           "Warm 2700K overhead string lights and dimmable perimeter uplights",
           "Pin-spot lighting on the focal celebration stage and cake/display table",
         ],
-        seatingSetup: `Clustered banquet and lounge seating configured for ${input.guestTarget} guests with clear ${input.preferences.accessibilityRequirements.toLowerCase()}.`,
+        seatingSetup: `Clustered banquet and lounge seating configured for ${input.guestTarget} guests with clear ${(input.preferences.accessibilityRequirements || "step-free access").toLowerCase()}.`,
         photoConcepts: [
           `Candid arrival portraits at the ${input.theme} welcome backdrop`,
           "Wide-angle celebration toast under warm ambient lighting",
         ],
-        foodPresentation: `${input.preferences.foodPreferences} with clearly labelled ${input.preferences.dietaryRequirements} stations.`,
+        foodPresentation: `${input.preferences.foodPreferences || "Curated seasonal dining"} with clearly labelled ${input.preferences.dietaryRequirements || "dietary option"} stations.`,
         creativeTouches: [
           "QR digital memory board for guests to upload instant candid photos",
           "Eco-friendly artisan thank-you favors with personalized notes",

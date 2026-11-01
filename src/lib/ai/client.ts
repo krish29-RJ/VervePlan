@@ -31,15 +31,18 @@ export function getOpenAIClient(): OpenAI | null {
 
 /**
  * Sanitizes untrusted user text to mitigate prompt injection, jailbreaks,
- * and script execution before embedding in GenAI prompts.
+ * cross-site scripting (XSS), and script execution before embedding in GenAI prompts.
  */
 export function sanitizeUserPromptInput(input: string, maxLength = 800): string {
-  if (!input) return "";
+  if (!input || typeof input !== "string") return "";
   return input
     .slice(0, maxLength)
     .replace(/```/g, "'''")
-    .replace(/<\/?(script|system|instruction|override|assistant|user)[^>]*>/gi, "")
+    .replace(/<\/?(script|system|instruction|override|assistant|user|iframe|object|embed)[^>]*>/gi, "")
+    .replace(/javascript:[^"'\s]*/gi, "")
+    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, "")
     .replace(/(?:ignore|disregard|forget)\s+(?:all\s+)?(?:previous|prior)\s+(?:instructions|prompts|directives)/gi, "[redacted-directive]")
+    .replace(/(?:bypass|disable)\s+(?:all\s+)?(?:safety|content)\s+filters?/gi, "[redacted-directive]")
     .trim();
 }
 

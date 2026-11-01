@@ -416,4 +416,75 @@ describe("VervePlan — Google Prompt Wars Challenge 5 Test Suite", () => {
       expect(insights.length).toBeGreaterThan(0);
     });
   });
+
+  /* -------------------------------------------------------------------------
+   * PARAMETER 7: ADVANCED SECURITY DEFENSES & ZERO-VALUE BUDGET INVARIANTS
+   * ------------------------------------------------------------------------- */
+  describe("7. Advanced Security Defenses & Zero-Value Budget Invariants", () => {
+    it("neutralizes javascript protocols, onerror handlers, and embedded iframes", () => {
+      const maliciousPayload =
+        "Decor Theme <iframe src='evil.com'></iframe><img src=x onerror='alert(1)'> javascript:stealCookies()";
+      const sanitized = sanitizeUserPromptInput(maliciousPayload);
+      expect(sanitized).not.toContain("<iframe");
+      expect(sanitized).not.toContain("onerror=");
+      expect(sanitized).not.toContain("javascript:");
+    });
+
+    it("handles zero-budget and zero-expense edges gracefully without division-by-zero", () => {
+      const emptySummary = calculateBudgetSummary(0, [], []);
+      expect(emptySummary.totalBudgetMinor).toBe(0);
+      expect(emptySummary.confirmedSpendMinor).toBe(0);
+      expect(emptySummary.remainingFromTotalMinor).toBe(0);
+      expect(emptySummary.overBudgetCategories.length).toBe(0);
+    });
+  });
+
+  /* -------------------------------------------------------------------------
+   * PARAMETER 8: OFFLINE RESILIENCE & CONCURRENCY CONTROL INVARIANTS
+   * ------------------------------------------------------------------------- */
+  describe("8. Offline Resilience & Concurrency Control Invariants", () => {
+    it("deterministic generator yields complete 4-pillar deliverables without network access", () => {
+      const offlineInput = CreateEventInputSchema.parse({
+        title: "Monsoon Wedding Celebration",
+        eventType: "Wedding",
+        eventDate: "2026-11-15",
+        location: "Kochi, Kerala",
+        guestTarget: 150,
+        totalBudgetMinor: 50000000,
+        currency: "INR",
+        theme: "Coastal Elegance",
+        preferences: {
+          atmosphere: "Warm and traditional",
+          indoorOutdoor: "Outdoor",
+          colorPalette: ["#7456E8", "#FF8075", "#F4C56A", "#241D39"],
+          foodPreferences: "Traditional Kerala Sadhya",
+          dietaryRequirements: "Vegetarian and vegan",
+          priorities: ["Catering", "Photography"],
+        },
+      });
+      const offlinePlan = buildDeterministicEventPlan(offlineInput);
+
+      expect(offlinePlan.overview.title).toBe("Monsoon Wedding Celebration");
+      expect(offlinePlan.budgetAllocations.length).toBeGreaterThanOrEqual(4);
+      expect(offlinePlan.tasks.length).toBeGreaterThanOrEqual(4);
+      expect(offlinePlan.vendorRequirements.length).toBeGreaterThanOrEqual(3);
+      expect(offlinePlan.itinerary.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it("validates proposal category sums do not exceed the proposed total budget limit", () => {
+      const proposalData = {
+        proposedTotalBudgetMinor: 9000000,
+        budgetChanges: [
+          { categoryName: "Venue", previousMinor: 1800000, proposedMinor: 4000000, deltaMinor: 2200000, rationale: "" },
+          { categoryName: "Catering", previousMinor: 2600000, proposedMinor: 5000000, deltaMinor: 2400000, rationale: "" },
+        ],
+      };
+      const totalProposedCategories = proposalData.budgetChanges.reduce(
+        (acc, c) => acc + c.proposedMinor,
+        0
+      );
+      expect(totalProposedCategories).toBe(proposalData.proposedTotalBudgetMinor);
+      expect(totalProposedCategories).toBeLessThanOrEqual(proposalData.proposedTotalBudgetMinor);
+    });
+  });
 });

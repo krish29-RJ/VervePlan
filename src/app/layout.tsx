@@ -56,9 +56,18 @@ export default function RootLayout({
         <link rel="stylesheet" href="/utsav-theme.css" />
       </head>
       <body className="min-h-screen bg-utsav-bg bg-utsav-mesh text-utsav-text font-sans selection:bg-utsav-primary/20 selection:text-utsav-primary flex flex-col">
+        {/* Accessible Skip to Content Link for Keyboard and Screen Reader Users */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-utsav-primary focus:text-white focus:font-extrabold focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-utsav-primary"
+        >
+          Skip to main content
+        </a>
         <UtsavProvider>
           <Navbar />
-          <main className="flex-1 flex flex-col w-full">{children}</main>
+          <main id="main-content" role="main" tabIndex={-1} className="flex-1 flex flex-col w-full focus:outline-none">
+            {children}
+          </main>
         </UtsavProvider>
       </body>
     </html>

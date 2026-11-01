@@ -262,6 +262,7 @@ export default function TimelinePage() {
           >
             <input
               type="text"
+              aria-label="AI timeline adjustment prompt"
               value={aiInstruction}
               onChange={(e) => setAiInstruction(e.target.value)}
               placeholder='e.g., "Move my decoration planning one week earlier."'
@@ -504,10 +505,11 @@ export default function TimelinePage() {
               </h2>
               <form onSubmit={handleAddTask} className="space-y-3 text-xs">
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="task-title-input" className="block font-extrabold text-utsav-text mb-1">
                     Task Title
                   </label>
                   <input
+                    id="task-title-input"
                     type="text"
                     required
                     value={title}
@@ -518,10 +520,11 @@ export default function TimelinePage() {
                 </div>
 
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="task-desc-input" className="block font-extrabold text-utsav-text mb-1">
                     Notes / Description
                   </label>
                   <input
+                    id="task-desc-input"
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -532,10 +535,11 @@ export default function TimelinePage() {
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="task-duedate-input" className="block font-extrabold text-utsav-text mb-1">
                       Due Date
                     </label>
                     <input
+                      id="task-duedate-input"
                       type="date"
                       value={dueDate || computeRelativeDueDate(event.eventDate, 10)}
                       onChange={(e) => setDueDate(e.target.value)}
@@ -543,10 +547,11 @@ export default function TimelinePage() {
                     />
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="task-priority-select" className="block font-extrabold text-utsav-text mb-1">
                       Priority
                     </label>
                     <select
+                      id="task-priority-select"
                       value={priority}
                       onChange={(e) => setPriority(e.target.value as TaskPriority)}
                       className="w-full border px-2.5 py-2"
@@ -560,10 +565,11 @@ export default function TimelinePage() {
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="task-category-input" className="block font-extrabold text-utsav-text mb-1">
                       Category
                     </label>
                     <input
+                      id="task-category-input"
                       type="text"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
@@ -571,10 +577,11 @@ export default function TimelinePage() {
                     />
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="task-phase-select" className="block font-extrabold text-utsav-text mb-1">
                       Phase
                     </label>
                     <select
+                      id="task-phase-select"
                       value={phase}
                       onChange={(e) =>
                         setPhase(e.target.value as TaskRecord["phase"])

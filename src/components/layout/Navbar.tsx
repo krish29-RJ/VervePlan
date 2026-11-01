@@ -85,7 +85,7 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 utsav-glass border-b border-utsav-primary/12 no-print w-full">
+    <header role="banner" className="sticky top-0 z-40 utsav-glass border-b border-utsav-primary/12 no-print w-full">
       <div className="utsav-container h-16 sm:h-[68px] flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo & Desktop/Tablet Navigation */}
         <div className="flex items-center gap-3 lg:gap-7 min-w-0">

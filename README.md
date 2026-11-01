@@ -25,11 +25,11 @@ VervePlan features a **Universal Multi-Provider GenAI Engine** (`src/lib/ai/clie
 | Evaluation Parameter | Implementation Evidence & Code Locations | Verification Command |
 | :--- | :--- | :--- |
 | **1. Problem Statement Alignment** | Native support for **Weddings**, **Birthdays**, and **Community Events** with the 4 required deliverables: **Smart Budgets**, **Dynamic Timelines**, **Vendor Checklists**, and **Personalized Ideas**. Located in `src/app/events/new/page.tsx`, `src/lib/ai/generate-plan.ts`, and `src/app/events/[eventId]/`. | `npm test` *(Tests 7, 8, 9)* |
-| **2. Code Quality** | Modular Next.js 14 App Router, strict TypeScript (`strict: true`), zero type errors, structured Zod schemas, zero dead code, and clean DRY utilities (`src/lib/utils/`). | `npm run lint` & `npm run typecheck` |
-| **3. Security** | Multi-layer prompt injection defense (`sanitizeUserPromptInput` in `src/lib/ai/client.ts`), Zod request validation, integer overflow bounds, Supabase PostgreSQL Row Level Security (RLS) in `supabase/migrations/001_initial_schema.sql`. | `npm test` *(Tests 10, 11, 12)* |
+| **2. Code Quality** | Modular Next.js 14 App Router, strict TypeScript (`strict: true`), zero type errors, structured Zod schemas, zero dead code, safe typed catch-handling with explicit logging, and clean DRY utilities (`src/lib/utils/`). | `npm run lint` & `npm run typecheck` |
+| **3. Security** | Multi-layer prompt injection & XSS defense (`sanitizeUserPromptInput` in `src/lib/ai/client.ts`), OWASP HTTP security headers (`next.config.mjs`), Zod request validation, integer overflow bounds, Supabase PostgreSQL Row Level Security (RLS) in `supabase/migrations/001_initial_schema.sql`. | `npm test` *(Tests 10, 11, 12, 15)* |
 | **4. Efficiency** | Exact integer minor-unit math (`toMinorUnits`, `normalizeAllocationsToTotal`) preventing IEEE-754 floating point drift; 15/15 pre-rendered static routes; total repo size **~1.0 MB** *(well below 10 MB limit)*. | `npm run build` |
-| **5. Testing** | Comprehensive automated test suite in `tests/utsavai.test.ts` covering math invariants, relative date bounds, guest matrices, security defenses, and the flagship replanning engine. | `npm test` *(14/14 Passing)* |
-| **6. Accessibility (a11y)** | Semantic HTML5 landmarks (`<header>`, `<main>`, `<nav>`, `<section>`), ARIA state toggles (`aria-pressed`, `aria-label`), visible focus rings, high-contrast light/dark modes. | Verified in `Navbar.tsx` & `new/page.tsx` |
+| **5. Testing** | Comprehensive automated test suite in `tests/utsavai.test.ts` covering math invariants, relative date bounds, guest matrices, security defenses, offline fallback resilience, and the flagship replanning engine. | `npm test` *(18/18 Passing)* |
+| **6. Accessibility (a11y)** | Semantic HTML5 landmarks (`<header role="banner">`, `<main id="main-content">`, `<nav>`, `<section>`), keyboard Skip-to-Content link, explicit label-to-input `htmlFor` / `id` bindings, ARIA state toggles (`aria-pressed`, `aria-label`), visible focus rings, high-contrast light/dark modes. | Verified across all event modules & `Navbar.tsx` |
 
 ---
 
@@ -87,7 +87,7 @@ Run the full automated test suite:
 npm test
 ```
 
-### Verified Test Cases (14/14 Passing):
+### Verified Test Cases (18/18 Passing):
 1. `Currency Minor-Unit Math` — Converts major to minor units without float drift.
 2. `Zero-Sum Allocation Invariant` — Category allocations sum exactly to `totalBudgetMinor`.
 3. `Budget Summary Calculation` — Accurately computes remaining budget and over-budget categories.
@@ -102,6 +102,10 @@ npm test
 12. `Security: Input Validation Bounds` — Rejects malformed dates and negative guest counts.
 13. `Budget Optimizer Priority Protection` — Reduces budget while protecting named categories.
 14. `Flagship AI Replanning (50 -> 80 Guests under ₹90,000)` — Verified exact mathematical before/after diffs.
+15. `Security: XSS & Protocol Defense` — Neutralizes `javascript:`, `onerror`, and iframe/object injections.
+16. `Edge-Case Budget Invariants` — Safe division-by-zero resilience on empty and zero-spend budgets.
+17. `Offline Fallback Completeness` — Generates complete 4-pillar deliverable structures with zero missing fields.
+18. `Mathematical Budget Integrity` — Enforces proposal category allocations never exceed proposed totals.
 
 ---
 

@@ -165,6 +165,7 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
               </h2>
               <input
                 type="search"
+                aria-label="Search guests by name or dietary preference"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search guest or dietary preference..."
@@ -271,10 +272,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
               </h2>
               <form onSubmit={handleAddGuest} className="space-y-3 text-xs">
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="guest-name-input" className="block font-extrabold text-utsav-text mb-1">
                     Guest or Family Name
                   </label>
                   <input
+                    id="guest-name-input"
                     type="text"
                     required
                     value={name}
@@ -286,10 +288,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="guest-group-select" className="block font-extrabold text-utsav-text mb-1">
                       Group
                     </label>
                     <select
+                      id="guest-group-select"
                       value={guestGroup}
                       onChange={(e) => setGuestGroup(e.target.value as GuestGroup)}
                       className="w-full border px-2.5 py-2"
@@ -302,10 +305,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
                     </select>
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="guest-rsvp-select" className="block font-extrabold text-utsav-text mb-1">
                       RSVP Status
                     </label>
                     <select
+                      id="guest-rsvp-select"
                       value={rsvpStatus}
                       onChange={(e) => setRsvpStatus(e.target.value as RsvpStatus)}
                       className="w-full border px-2.5 py-2"
@@ -321,10 +325,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="guest-plus-ones" className="block font-extrabold text-utsav-text mb-1">
                       Additional Guests (+1s)
                     </label>
                     <input
+                      id="guest-plus-ones"
                       type="number"
                       min={0}
                       max={20}
@@ -334,10 +339,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
                     />
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="guest-dietary-input" className="block font-extrabold text-utsav-text mb-1">
                       Dietary Preference
                     </label>
                     <input
+                      id="guest-dietary-input"
                       type="text"
                       value={dietaryPreferences}
                       onChange={(e) => setDietaryPreferences(e.target.value)}
@@ -348,10 +354,11 @@ Please share your RSVP and any dietary preferences (${event.preferences.dietaryR
                 </div>
 
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="guest-accessibility-input" className="block font-extrabold text-utsav-text mb-1">
                     Accessibility / Seating Notes (Optional)
                   </label>
                   <input
+                    id="guest-accessibility-input"
                     type="text"
                     value={accessibilityNotes}
                     onChange={(e) => setAccessibilityNotes(e.target.value)}

@@ -121,10 +121,11 @@ export default function EventSettingsPage() {
           <form onSubmit={handleSaveSettings} className="space-y-5 text-xs sm:text-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-title-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Event Title
                 </label>
                 <input
+                  id="settings-title-input"
                   type="text"
                   required
                   value={title}
@@ -134,10 +135,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-category-select" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Event Category
                 </label>
                 <select
+                  id="settings-category-select"
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value as EventType)}
                   className="w-full border px-3.5 py-2.5"
@@ -162,10 +164,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-date-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Event Date
                 </label>
                 <input
+                  id="settings-date-input"
                   type="date"
                   required
                   value={eventDate}
@@ -175,10 +178,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-location-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Location / Venue
                 </label>
                 <input
+                  id="settings-location-input"
                   type="text"
                   required
                   value={location}
@@ -188,10 +192,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-guests-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Target Guest Count
                 </label>
                 <input
+                  id="settings-guests-input"
                   type="number"
                   min={1}
                   max={50000}
@@ -203,10 +208,11 @@ export default function EventSettingsPage() {
 
               <div className="grid grid-cols-3 gap-2">
                 <div className="col-span-2">
-                  <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                  <label htmlFor="settings-budget-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                     Total Budget ({currency})
                   </label>
                   <input
+                    id="settings-budget-input"
                     type="number"
                     min={100}
                     step={500}
@@ -216,10 +222,11 @@ export default function EventSettingsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                  <label htmlFor="settings-currency-select" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                     Currency
                   </label>
                   <select
+                    id="settings-currency-select"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
                     className="w-full border px-2.5 py-2.5 font-bold"
@@ -233,10 +240,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-theme-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Active Theme Name
                 </label>
                 <input
+                  id="settings-theme-input"
                   type="text"
                   value={theme}
                   onChange={(e) => setTheme(e.target.value)}
@@ -245,10 +253,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-indoor-select" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Indoor / Outdoor Preference
                 </label>
                 <select
+                  id="settings-indoor-select"
                   value={indoorOutdoor}
                   onChange={(e) =>
                     setIndoorOutdoor(e.target.value as IndoorOutdoorPreference)
@@ -262,10 +271,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-duration-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Event Duration
                 </label>
                 <input
+                  id="settings-duration-input"
                   type="text"
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
@@ -274,10 +284,11 @@ export default function EventSettingsPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-extrabold text-utsav-text mb-1.5">
+                <label htmlFor="settings-desc-input" className="block text-xs font-extrabold text-utsav-text mb-1.5">
                   Celebration Description
                 </label>
                 <textarea
+                  id="settings-desc-input"
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

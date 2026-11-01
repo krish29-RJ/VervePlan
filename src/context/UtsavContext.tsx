@@ -262,7 +262,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
     syncDomTheme(mode);
     try {
       localStorage.setItem(STORAGE_KEY_THEME, mode);
-    } catch {}
+    } catch (e) {
+      console.warn("Unable to save theme mode to localStorage:", e);
+    }
   }, []);
 
   const toggleThemeMode = useCallback(() => {
@@ -271,7 +273,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
       syncDomTheme(next);
       try {
         localStorage.setItem(STORAGE_KEY_THEME, next);
-      } catch {}
+      } catch (e) {
+        console.warn("Unable to save toggled theme mode to localStorage:", e);
+      }
       return next;
     });
   }, []);
@@ -301,7 +305,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
     setUser(demoSession);
     try {
       localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(demoSession));
-    } catch {}
+    } catch (e) {
+      console.warn("Unable to save demo session to localStorage:", e);
+    }
   }, []);
 
   const loginWithEmail = useCallback(
@@ -384,12 +390,14 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(async () => {
     const supabase = getSupabaseBrowserClient();
     if (supabase) {
-      await supabase.auth.signOut().catch(() => undefined);
+      await supabase.auth.signOut().catch((e) => console.warn("Supabase sign out notice:", e));
     }
     setUser(null);
     try {
       localStorage.removeItem(STORAGE_KEY_AUTH);
-    } catch {}
+    } catch (e) {
+      console.warn("Unable to remove auth session from localStorage:", e);
+    }
   }, []);
 
   const resetDemoData = useCallback(() => {
@@ -403,7 +411,9 @@ export function UtsavProvider({ children }: { children: React.ReactNode }) {
         "utsav_reset_toast",
         "✨ Demo workspace restored to factory defaults! All sample celebrations, budgets, and tasks have been reset."
       );
-    } catch {}
+    } catch (e) {
+      console.warn("Unable to persist reset demo bundles to storage:", e);
+    }
     setToastMessage(
       "✨ Demo workspace restored to factory defaults! All sample celebrations, budgets, and tasks have been reset."
     );

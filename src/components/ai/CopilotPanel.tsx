@@ -370,6 +370,7 @@ export function CopilotPanel({
         <button
           type="submit"
           disabled={isSending || !input.trim()}
+          aria-label="Send message to Copilot"
           className="utsav-btn-primary !py-3 !px-5 shrink-0"
         >
           <Send className="w-4 h-4" />

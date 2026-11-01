@@ -545,6 +545,7 @@ export default function EventOverviewPage() {
             <input
               id="theme-idea-input"
               type="text"
+              aria-label="AI theme idea prompt"
               value={ideaPrompt}
               onChange={(e) => setIdeaPrompt(e.target.value)}
               placeholder='e.g., "Suggest an elegant sunset garden theme for an engagement party"'

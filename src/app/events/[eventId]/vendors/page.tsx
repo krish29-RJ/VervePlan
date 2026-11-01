@@ -216,6 +216,7 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
               </h2>
               <input
                 type="search"
+                aria-label="Search vendors by name or category"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search vendor name or category..."
@@ -368,10 +369,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
               </h2>
               <form onSubmit={handleAddVendor} className="space-y-3 text-xs">
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="vendor-name-input" className="block font-extrabold text-utsav-text mb-1">
                     Business / Vendor Name
                   </label>
                   <input
+                    id="vendor-name-input"
                     type="text"
                     required
                     value={name}
@@ -383,10 +385,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="vendor-category-select" className="block font-extrabold text-utsav-text mb-1">
                       Category
                     </label>
                     <select
+                      id="vendor-category-select"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                       className="w-full border px-2.5 py-2"
@@ -399,10 +402,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
                     </select>
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="vendor-quoted-input" className="block font-extrabold text-utsav-text mb-1">
                       Quoted Price ({event.currency})
                     </label>
                     <input
+                      id="vendor-quoted-input"
                       type="number"
                       min={0}
                       value={quotedMajor}
@@ -415,10 +419,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
 
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="vendor-contact-input" className="block font-extrabold text-utsav-text mb-1">
                       Contact Person
                     </label>
                     <input
+                      id="vendor-contact-input"
                       type="text"
                       value={contactName}
                       onChange={(e) => setContactName(e.target.value)}
@@ -427,10 +432,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
                     />
                   </div>
                   <div>
-                    <label className="block font-extrabold text-utsav-text mb-1">
+                    <label htmlFor="vendor-status-select" className="block font-extrabold text-utsav-text mb-1">
                       Booking Status
                     </label>
                     <select
+                      id="vendor-status-select"
                       value={bookingStatus}
                       onChange={(e) =>
                         setBookingStatus(e.target.value as VendorBookingStatus)
@@ -447,10 +453,11 @@ Note: Please share your itemized quote via email. Looking forward to hearing fro
                 </div>
 
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="vendor-notes-input" className="block font-extrabold text-utsav-text mb-1">
                     Notes & Contract Terms
                   </label>
                   <input
+                    id="vendor-notes-input"
                     type="text"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}

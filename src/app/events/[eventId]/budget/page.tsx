@@ -472,6 +472,7 @@ export default function SmartBudgetPage() {
           >
             <input
               type="text"
+              aria-label="AI budget optimization prompt"
               value={optInstruction}
               onChange={(e) => setOptInstruction(e.target.value)}
               placeholder='e.g., "Reduce my wedding expenses by 15% without compromising photography."'
@@ -718,10 +719,11 @@ export default function SmartBudgetPage() {
               className="pt-3 border-t border-utsav-primary/10 flex flex-wrap items-end gap-3"
             >
               <div className="flex-1 min-w-[160px]">
-                <label className="block text-xs font-extrabold text-utsav-text mb-1">
+                <label htmlFor="new-cat-name" className="block text-xs font-extrabold text-utsav-text mb-1">
                   New Custom Category
                 </label>
                 <input
+                  id="new-cat-name"
                   type="text"
                   value={newCatName}
                   onChange={(e) => setNewCatName(e.target.value)}
@@ -730,10 +732,11 @@ export default function SmartBudgetPage() {
                 />
               </div>
               <div className="w-36">
-                <label className="block text-xs font-extrabold text-utsav-text mb-1">
+                <label htmlFor="new-cat-amount" className="block text-xs font-extrabold text-utsav-text mb-1">
                   Budget ({event.currency})
                 </label>
                 <input
+                  id="new-cat-amount"
                   type="number"
                   min={0}
                   value={newCatAmountMajor}
@@ -757,10 +760,11 @@ export default function SmartBudgetPage() {
 
             <form onSubmit={handleAddExpense} className="space-y-3 text-xs">
               <div>
-                <label className="block font-extrabold text-utsav-text mb-1">
+                <label htmlFor="exp-title-input" className="block font-extrabold text-utsav-text mb-1">
                   Expense / Quote Title
                 </label>
                 <input
+                  id="exp-title-input"
                   type="text"
                   required
                   value={expTitle}
@@ -772,10 +776,11 @@ export default function SmartBudgetPage() {
 
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="exp-amount-input" className="block font-extrabold text-utsav-text mb-1">
                     Amount ({event.currency})
                   </label>
                   <input
+                    id="exp-amount-input"
                     type="number"
                     required
                     min={1}
@@ -786,10 +791,11 @@ export default function SmartBudgetPage() {
                   />
                 </div>
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="exp-category-select" className="block font-extrabold text-utsav-text mb-1">
                     Category
                   </label>
                   <select
+                    id="exp-category-select"
                     value={expCategoryId || budgetCategories[0]?.id || ""}
                     onChange={(e) => setExpCategoryId(e.target.value)}
                     className="w-full border px-2.5 py-2"
@@ -805,10 +811,11 @@ export default function SmartBudgetPage() {
 
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="exp-cost-type-select" className="block font-extrabold text-utsav-text mb-1">
                     Cost Classification
                   </label>
                   <select
+                    id="exp-cost-type-select"
                     value={expCostType}
                     onChange={(e) =>
                       setExpCostType(e.target.value as ExpenseCostType)
@@ -821,10 +828,11 @@ export default function SmartBudgetPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-extrabold text-utsav-text mb-1">
+                  <label htmlFor="exp-payment-status-select" className="block font-extrabold text-utsav-text mb-1">
                     Payment Status
                   </label>
                   <select
+                    id="exp-payment-status-select"
                     value={expPaymentStatus}
                     onChange={(e) =>
                       setExpPaymentStatus(e.target.value as ExpensePaymentStatus)
