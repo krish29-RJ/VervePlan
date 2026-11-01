@@ -405,28 +405,30 @@ export default function CreateEventWizardPage() {
   function validateStep1(): boolean {
     const errors: Record<string, string> = {};
 
-    if (!title.trim() && !activeCategoryCard.sampleTitle) {
-      errors.title = "Please enter an Event Title.";
+    if (!title.trim()) {
+      errors.title = "Event Title is required.";
+    } else if (title.trim().length < 3) {
+      errors.title = "Event Title must be at least 3 characters.";
     }
 
-    const resolvedDate = eventDate.trim() || getFutureDateIso(30);
-    if (!resolvedDate) {
-      errors.eventDate = "Please select an Event Date.";
+    if (!eventDate.trim()) {
+      errors.eventDate = "Event Date is required.";
     }
 
-    const resolvedLocation = location.trim() || "Bengaluru, Karnataka";
-    if (!resolvedLocation) {
-      errors.location = "Please enter a City or Location.";
+    if (!location.trim()) {
+      errors.location = "City & Area is required.";
+    } else if (location.trim().length < 2) {
+      errors.location = "Please enter a valid city or area.";
     }
 
-    const parsedGuests = Number(guestTarget) || activeCategoryCard.defaultGuests;
-    if (parsedGuests < 1) {
-      errors.guestTarget = "Please enter number of guests.";
+    const parsedGuests = Number(guestTarget);
+    if (!guestTarget.trim() || !Number.isFinite(parsedGuests) || parsedGuests < 1) {
+      errors.guestTarget = "Please enter expected number of guests (min 1).";
     }
 
-    const parsedBudget = Number(budgetMajor) || activeCategoryCard.defaultBudgetMajor;
-    if (parsedBudget < 100) {
-      errors.budgetMajor = `Please enter a valid budget in ${currency}.`;
+    const parsedBudget = Number(budgetMajor);
+    if (!budgetMajor.trim() || !Number.isFinite(parsedBudget) || parsedBudget < 100) {
+      errors.budgetMajor = `Total Budget is required (min 100 ${currency}).`;
     }
 
     setStep1Errors(errors);
@@ -716,9 +718,14 @@ export default function CreateEventWizardPage() {
 
           {/* Core Event Scale & Details (Clean 2-Column Grid) */}
           <div className="pt-4 border-t border-utsav-primary/10 space-y-4">
-            <h3 className="text-sm font-extrabold text-utsav-text">
-              Core Details & Scale
-            </h3>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-extrabold text-utsav-text">
+                Core Details & Scale
+              </h3>
+              <span className="text-[11px] font-bold text-utsav-muted">
+                Fields marked with <span className="text-utsav-coral font-extrabold">*</span> are required
+              </span>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Event Title */}
@@ -727,16 +734,29 @@ export default function CreateEventWizardPage() {
                   htmlFor="evt-title"
                   className="block text-xs font-extrabold text-utsav-text mb-1"
                 >
-                  Event Title
+                  Event Title <span className="text-utsav-coral">*</span>
                 </label>
                 <input
                   id="evt-title"
                   type="text"
+                  required
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                    if (step1Errors.title) {
+                      setStep1Errors((prev) => ({ ...prev, title: "" }));
+                    }
+                  }}
                   placeholder={`e.g., ${activeCategoryCard.sampleTitle}`}
-                  className="w-full border px-3.5 py-2 text-sm rounded-xl placeholder:text-utsav-muted/50"
+                  className={`w-full border px-3.5 py-2 text-sm rounded-xl placeholder:text-utsav-muted/50 ${
+                    step1Errors.title ? "!border-utsav-coral ring-1 ring-utsav-coral/40" : ""
+                  }`}
                 />
+                {step1Errors.title && (
+                  <p className="text-[11px] font-bold text-utsav-coral mt-1">
+                    {step1Errors.title}
+                  </p>
+                )}
               </div>
 
               {/* Event Date */}
@@ -745,15 +765,28 @@ export default function CreateEventWizardPage() {
                   htmlFor="evt-date"
                   className="block text-xs font-extrabold text-utsav-text mb-1"
                 >
-                  Date
+                  Date <span className="text-utsav-coral">*</span>
                 </label>
                 <input
                   id="evt-date"
                   type="date"
+                  required
                   value={eventDate}
-                  onChange={(e) => setEventDate(e.target.value)}
-                  className="w-full border px-3.5 py-2 text-sm rounded-xl"
+                  onChange={(e) => {
+                    setEventDate(e.target.value);
+                    if (step1Errors.eventDate) {
+                      setStep1Errors((prev) => ({ ...prev, eventDate: "" }));
+                    }
+                  }}
+                  className={`w-full border px-3.5 py-2 text-sm rounded-xl ${
+                    step1Errors.eventDate ? "!border-utsav-coral ring-1 ring-utsav-coral/40" : ""
+                  }`}
                 />
+                {step1Errors.eventDate && (
+                  <p className="text-[11px] font-bold text-utsav-coral mt-1">
+                    {step1Errors.eventDate}
+                  </p>
+                )}
               </div>
 
               {/* Location */}
@@ -762,16 +795,29 @@ export default function CreateEventWizardPage() {
                   htmlFor="evt-location"
                   className="block text-xs font-extrabold text-utsav-text mb-1"
                 >
-                  City & Area
+                  City & Area <span className="text-utsav-coral">*</span>
                 </label>
                 <input
                   id="evt-location"
                   type="text"
+                  required
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                    if (step1Errors.location) {
+                      setStep1Errors((prev) => ({ ...prev, location: "" }));
+                    }
+                  }}
                   placeholder="e.g., Bengaluru, Karnataka"
-                  className="w-full border px-3.5 py-2 text-sm rounded-xl placeholder:text-utsav-muted/50"
+                  className={`w-full border px-3.5 py-2 text-sm rounded-xl placeholder:text-utsav-muted/50 ${
+                    step1Errors.location ? "!border-utsav-coral ring-1 ring-utsav-coral/40" : ""
+                  }`}
                 />
+                {step1Errors.location && (
+                  <p className="text-[11px] font-bold text-utsav-coral mt-1">
+                    {step1Errors.location}
+                  </p>
+                )}
               </div>
 
               {/* Expected Guests */}
@@ -780,17 +826,30 @@ export default function CreateEventWizardPage() {
                   htmlFor="evt-guests"
                   className="block text-xs font-extrabold text-utsav-text mb-1"
                 >
-                  Expected Guests
+                  Expected Guests <span className="text-utsav-coral">*</span>
                 </label>
                 <input
                   id="evt-guests"
                   type="number"
+                  required
                   min={1}
                   value={guestTarget}
-                  onChange={(e) => setGuestTarget(e.target.value)}
+                  onChange={(e) => {
+                    setGuestTarget(e.target.value);
+                    if (step1Errors.guestTarget) {
+                      setStep1Errors((prev) => ({ ...prev, guestTarget: "" }));
+                    }
+                  }}
                   placeholder={`e.g., ${activeCategoryCard.defaultGuests}`}
-                  className="w-full border px-3.5 py-2 text-sm rounded-xl utsav-num font-bold placeholder:font-normal"
+                  className={`w-full border px-3.5 py-2 text-sm rounded-xl utsav-num font-bold placeholder:font-normal ${
+                    step1Errors.guestTarget ? "!border-utsav-coral ring-1 ring-utsav-coral/40" : ""
+                  }`}
                 />
+                {step1Errors.guestTarget && (
+                  <p className="text-[11px] font-bold text-utsav-coral mt-1">
+                    {step1Errors.guestTarget}
+                  </p>
+                )}
               </div>
 
               {/* Budget & Currency */}
@@ -800,18 +859,31 @@ export default function CreateEventWizardPage() {
                     htmlFor="evt-budget"
                     className="block text-xs font-extrabold text-utsav-text mb-1"
                   >
-                    Total Budget
+                    Total Budget <span className="text-utsav-coral">*</span>
                   </label>
                   <input
                     id="evt-budget"
                     type="number"
+                    required
                     min={100}
                     step={500}
                     value={budgetMajor}
-                    onChange={(e) => setBudgetMajor(e.target.value)}
+                    onChange={(e) => {
+                      setBudgetMajor(e.target.value);
+                      if (step1Errors.budgetMajor) {
+                        setStep1Errors((prev) => ({ ...prev, budgetMajor: "" }));
+                      }
+                    }}
                     placeholder={`e.g., ${activeCategoryCard.defaultBudgetMajor}`}
-                    className="w-full border px-3.5 py-2 text-sm rounded-xl utsav-num font-bold placeholder:font-normal"
+                    className={`w-full border px-3.5 py-2 text-sm rounded-xl utsav-num font-bold placeholder:font-normal ${
+                      step1Errors.budgetMajor ? "!border-utsav-coral ring-1 ring-utsav-coral/40" : ""
+                    }`}
                   />
+                  {step1Errors.budgetMajor && (
+                    <p className="text-[11px] font-bold text-utsav-coral mt-1">
+                      {step1Errors.budgetMajor}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
